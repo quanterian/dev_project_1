@@ -1,0 +1,8 @@
+---
+# vars file for php-file-update
+file_uploads_value: "On"
+allow_url_fopen_value: "On"
+short_open_tag_value: "On"
+memory_limit_value: "512M"
+upload_max_filesize_value: "128M"
+max_execution_time_value: "3600"

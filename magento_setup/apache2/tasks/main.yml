@@ -1,0 +1,13 @@
+---
+# tasks file for apache2
+
+- name: Updating repository
+  apt: update_cache=yes
+
+- name: Installing apache2
+  apt: name=apache2 state=present
+
+- name: Copying apache conf file
+  copy:
+          src: templates/apache2.conf
+          dest: /etc/apache2/

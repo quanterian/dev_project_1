@@ -1,0 +1,51 @@
+---
+# tasks file for mysql-install
+
+- name: Updating the cache
+  apt: update_cache=yes
+
+- name: Install mysql packages
+  apt: pkg={{ item }} state=latest
+  with_items:
+       
+       - mariadb-server 
+       - mariadb-client
+       - python-pip
+       - python3-pip
+
+- name: Installing pymysql
+  pip: name=pymysql state=present
+
+- name: Check root password updated or not
+  stat: path=/root/.my.cnf
+  register: mysql_installed
+
+- name: Updating root password
+  shell: >
+          mysql -NBe
+          "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'Rehan@123';" 
+   
+  when: mysql_installed.stat.exists == false
+
+- name: Creating .my.cnf file
+  shell: touch .my.cnf
+  when: mysql_installed.stat.exists == false
+
+- name: Create DB
+  mysql_db:
+        name={{db_name}}
+        login_host={{db_host}}
+        login_password={{db_root_pwd}}
+        login_user=root
+  run_once: true
+
+- name: Create DB user
+  mysql_user:
+        name={{db_user}}
+        password={{db_password}}
+        priv={{db_name}}.*:ALL
+        host=%
+        login_host={{db_host}}
+        login_password={{db_root_pwd}}
+        login_user=root
+  run_once: true

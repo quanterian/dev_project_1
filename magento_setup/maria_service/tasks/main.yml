@@ -1,0 +1,11 @@
+---
+# Service_star file for magento_setup
+
+
+- name: Apache Service Enable & restart
+  shell: >
+     sudo a2enmod rewrite ;  systemctl restart apache2
+
+- name: Mysql Service restart
+  shell: >
+      systemctl restart mariadb.service ; sudo systemctl enable mariadb.service

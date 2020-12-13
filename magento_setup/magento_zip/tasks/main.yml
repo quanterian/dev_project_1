@@ -1,0 +1,23 @@
+---
+# tasks file for magento_zip
+
+
+- name: Downloading magento zip
+  get_url: 
+          url: https://github.com/magento/magento2/archive/{{magento_version}}.zip
+          dest: /var/www/html/
+          force_basic_auth: yes
+
+- name: Unzipping the folder
+  unarchive:
+          src: /var/www/html/magento2-{{magento_version}}.zip
+          dest: /var/www/html/
+          remote_src: yes
+
+- name: Adding permission for folder
+  shell: >
+      chmod -R 777 /var/www/html/magento2-{{magento_version}}
+
+- name: Deploying Composer
+  shell: >
+      cd /var/www/html//magento2-{{magento_version}} ; composer self-update --1 ; echo -ne '\n' | composer install

@@ -1,0 +1,7 @@
+---
+# vars file for mysql-install
+db_host: localhost
+db_root_pwd: Rehan@123
+db_name: magento2
+db_user: magento2
+db_password: magento2@123

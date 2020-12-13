@@ -1,0 +1,10 @@
+---
+# tasks file for composer
+#
+
+- name: Download Composer
+  script: install_composer.sh
+
+- name: Installing Composer
+  apt: name=composer update_cache=yes
+

@@ -1,0 +1,11 @@
+---
+- hosts: all
+  become: true
+  roles:
+          - apache2
+          - mysql-install
+          - php
+          - php-file-update
+          - composer
+          - magento_zip
+          - Service_start
